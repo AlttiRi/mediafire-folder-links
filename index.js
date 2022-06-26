@@ -43,7 +43,7 @@
         const resp = await fetch(url, {
             headers: {
                 "Cache-Control": "no-cache",
-                "Accept": "*/*",                
+                "Accept": "*/*",
                 "X-Requested-With": "XMLHttpRequest",
                 "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
             },
@@ -65,6 +65,7 @@
     const [rootFolder] = await fetchFolderInfo([rootId]);
 
     let urls = [];
+    let size = 0;
 
     async function fetchFiles(folderId, path) {
         for (const file of await fetchContentInfo(folderId, "files")) {
@@ -76,6 +77,7 @@
                 quickkey: file.quickkey,
                 hash: file.hash,
             };
+            size += parseInt(file.size);
             let url = file.links.normal_download + "#" + JSON.stringify(meta);
             urls.push(url);
         }
@@ -97,16 +99,19 @@
     console.log(globalThis.urlsText = urls.join("\n"));
     console.log(globalThis.urls = urls);
     console.log(globalThis.urlsJson = JSON.stringify(urls));
-    console.log("Total:", urls.length, "urlsText", "urls", "urlsJson");
+    console.log("Total:", urls.length, "Size:", bytesToSizeWinLike(size), "(", size, ")");
+    console.log("urlsText", "urls", "urlsJson");
 
 
     function sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
-
     function getRandomWord(len = 4) { // a-z alphabet
         return new Array(len).fill(0).map(() => {
             return String.fromCharCode(Math.trunc(Math.random() * 26) + 0x61);
         }).join("");
     }
+    // https://gist.github.com/AlttiRi/ee82de3728624f997b38e4fb90906914
+    function bytesToSizeWinLike(t){if(t<1024)return t+" B";let n=Math.floor(Math.log(t)/Math.log(1024)),o=t/Math.pow(1024,n);return o>=1e3&&(n++,o/=1024),toTruncPrecision3(o)+" "+["B","KB","MB","GB","TB","PB","EB","ZB","YB"][n]}
+    function toTruncPrecision3(t){let n;return t<10?n=Math.trunc(100*t)/100:t<100?n=Math.trunc(10*t)/10:t<1e3&&(n=Math.trunc(t)),t<.1?n.toPrecision(1):t<1?n.toPrecision(2):n.toPrecision(3)}
 })();
