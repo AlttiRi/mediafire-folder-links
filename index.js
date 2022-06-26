@@ -1,5 +1,4 @@
 (async function main(rootId) {
-
     /**
      * @param {String} folderId
      * @param {"files"|"folders"} type
@@ -15,8 +14,9 @@
             `folder_key=${folderId}&response_format=json`;
         const resp = await fetch(url, {
             headers: {
-                "cache-control": "no-cache",
-                "x-requested-with": "XMLHttpRequest"
+                "Cache-Control": "no-cache",
+                "Accept": "*/*",
+                "X-Requested-With": "XMLHttpRequest"
             }
         });
         const json = await resp.json();
@@ -38,13 +38,14 @@
      * >}
      */
     async function fetchFolderInfo(folderIds) {
-        const url = "https://www.mediafire.com/api/1.4/folder/get_info.php" + "?r=abcd"; // ???
+        const url = "https://www.mediafire.com/api/1.4/folder/get_info.php" + "?r=" + getRandomWord();
 
         const resp = await fetch(url, {
             headers: {
-                "cache-control": "no-cache",
-                "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
-                "x-requested-with": "XMLHttpRequest"
+                "Cache-Control": "no-cache",
+                "Accept": "*/*",                
+                "X-Requested-With": "XMLHttpRequest",
+                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
             },
             body: `folder_key=${encodeURIComponent(folderIds.join(","))}&details=yes&response_format=json`,
             method: "POST",
@@ -101,5 +102,11 @@
 
     function sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    function getRandomWord(len = 4) { // a-z alphabet
+        return new Array(len).fill(0).map(() => {
+            return String.fromCharCode(Math.trunc(Math.random() * 26) + 0x61);
+        }).join("");
     }
 })();
