@@ -101,7 +101,7 @@
     console.log(globalThis.urlsJson = JSON.stringify(urls));
     console.log(globalThis.urlsArray = "[\n" + urls.map(url => "`" + url.replaceAll("`", "\\`") + "`,").join("\n") + "\n]");
     console.log("Total:", urls.length, "Size:", bytesToSizeWinLike(size), "(", size, ")");
-    console.log( "urlsText", "urls", "urlsJson", "urlArray");
+    console.log( "urlsText", "urls", "urlsJson", "urlsArray");
 
 
     function sleep(ms) {
