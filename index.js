@@ -1,4 +1,45 @@
 (async function main(rootId) {
+    rootId = rootId || location.href.match(/(?<=www.mediafire.com\/folder\/)[^\/]+/)[0];
+    const [rootFolder] = await fetchFolderInfo([rootId]);
+
+    let urls = [];
+    let size = 0;
+
+    async function fetchFiles(folderId, path) {
+        for (const file of await fetchContentInfo(folderId, "files")) {
+            const meta = {
+                filename: file.filename,
+                path,
+                created_utc: file.created_utc,
+                size: parseInt(file.size),
+                quickkey: file.quickkey,
+                hash: file.hash,
+            };
+            size += meta.size;
+            let url = file.links.normal_download + "#" + JSON.stringify(meta);
+            urls.push(url);
+        }
+    }
+    async function fetchAll(folderId, path) {
+        console.log("Fetching", path.join("/"));
+        await sleep(250);
+        await fetchFiles(folderId, path);
+        await sleep(250);
+        for (const folder of await fetchContentInfo(folderId, "folders")) {
+            await fetchAll(folder.folderkey, [...path, folder.name]);
+        }
+    }
+
+    await fetchAll(rootId, [rootFolder.name]);
+
+    console.log(globalThis.urlsText = urls.join("\n"));
+    console.log(globalThis.urls = urls);
+    console.log(globalThis.urlsJson = JSON.stringify(urls));
+    console.log(globalThis.urlsArray = "[\n" + urls.map(url => "`" + url.replaceAll("`", "\\`") + "`,").join("\n") + "\n]");
+    console.log("Total:", urls.length, "Size:", bytesToSizeWinLike(size), "(", size, ")");
+    console.log("urlsText", "urls", "urlsJson", "urlsArray");
+
+
     /**
      * @param {String} folderId
      * @param {"files"|"folders"} type
@@ -59,49 +100,6 @@
         }
         return json.response.folder_infos;
     }
-
-
-    rootId = rootId || location.href.match(/(?<=www.mediafire.com\/folder\/)[^\/]+/)[0];
-    const [rootFolder] = await fetchFolderInfo([rootId]);
-
-    let urls = [];
-    let size = 0;
-
-    async function fetchFiles(folderId, path) {
-        for (const file of await fetchContentInfo(folderId, "files")) {
-            const meta = {
-                filename: file.filename,
-                path,
-                created_utc: file.created_utc,
-                size: parseInt(file.size),
-                quickkey: file.quickkey,
-                hash: file.hash,
-            };
-            size += meta.size;
-            let url = file.links.normal_download + "#" + JSON.stringify(meta);
-            urls.push(url);
-        }
-    }
-
-
-    async function fetchAll(folderId, path) {
-        console.log("Fetching", path.join("/"));
-        await sleep(250);
-        await fetchFiles(folderId, path);
-        await sleep(250);
-        for (const folder of await fetchContentInfo(folderId, "folders")) {
-            await fetchAll(folder.folderkey, [...path, folder.name]);
-        }
-    }
-
-    await fetchAll(rootId, [rootFolder.name]);
-
-    console.log(globalThis.urlsText = urls.join("\n"));
-    console.log(globalThis.urls = urls);
-    console.log(globalThis.urlsJson = JSON.stringify(urls));
-    console.log(globalThis.urlsArray = "[\n" + urls.map(url => "`" + url.replaceAll("`", "\\`") + "`,").join("\n") + "\n]");
-    console.log("Total:", urls.length, "Size:", bytesToSizeWinLike(size), "(", size, ")");
-    console.log("urlsText", "urls", "urlsJson", "urlsArray");
 
 
     function sleep(ms) {
