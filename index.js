@@ -99,8 +99,9 @@
     console.log(globalThis.urlsText = urls.join("\n"));
     console.log(globalThis.urls = urls);
     console.log(globalThis.urlsJson = JSON.stringify(urls));
+    console.log(globalThis.urlArray = "[\n" + urls.map(url => "`" + url.replaceAll("`", "\\`") + "`,").join("\n") + "\n]");
     console.log("Total:", urls.length, "Size:", bytesToSizeWinLike(size), "(", size, ")");
-    console.log("urlsText", "urls", "urlsJson");
+    console.log( "urlsText", "urls", "urlsJson", "urlArray");
 
 
     function sleep(ms) {
