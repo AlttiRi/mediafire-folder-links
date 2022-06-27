@@ -15,4 +15,4 @@ https://www.mediafire.com/file/qwe123/a.mp4/file#{"filename":"a.mp4","path":["Sh
 https://www.mediafire.com/file/asd453/b.mp4/file#{"filename":"b.mp4","path":["Shared videos","New"],"created_utc":"2021-12-31T10:00:00Z","size":234567,"quickkey":"asd453","hash":"123abc"}
 ```
 
-The global variables with the different representation of the same result are `urlsText`, `urls`, `urlsJson`, `urlArray`.
+The global variables with the different representation of the same result are `urlsText`, `urls`, `urlsJson`, `urlsArray`.
