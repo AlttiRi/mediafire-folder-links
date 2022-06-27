@@ -38,7 +38,7 @@
      * >}
      */
     async function fetchFolderInfo(folderIds) {
-        const url = "https://www.mediafire.com/api/1.4/folder/get_info.php" + "?r=" + getRandomWord();
+        const url = "https://www.mediafire.com/api/1.4/folder/get_info.php" + "?r=" + getRandomAZWord();
 
         const resp = await fetch(url, {
             headers: {
@@ -73,11 +73,11 @@
                 filename: file.filename,
                 path,
                 created_utc: file.created_utc,
-                size: file.size,
+                size: parseInt(file.size),
                 quickkey: file.quickkey,
                 hash: file.hash,
             };
-            size += parseInt(file.size);
+            size += meta.size;
             let url = file.links.normal_download + "#" + JSON.stringify(meta);
             urls.push(url);
         }
@@ -106,7 +106,7 @@
     function sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
-    function getRandomWord(len = 4) { // a-z alphabet
+    function getRandomAZWord(len = 4) {
         return new Array(len).fill(0).map(() => {
             return String.fromCharCode(Math.trunc(Math.random() * 26) + 0x61);
         }).join("");
