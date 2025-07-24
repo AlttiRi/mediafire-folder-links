@@ -1,5 +1,20 @@
 (async function main(rootId) {
-    rootId = rootId || location.href.match(/(?<=www.mediafire.com\/folder\/)[^\/]+/)[0];
+    if (!rootId) {
+        if (location.hostname !== "www.mediafire.com") {
+            console.log("The script work only on www.mediafire.com");
+            console.log("The `location` must look like this: https://www.mediafire.com/folder/abcd123qwe/");
+            return;
+        }
+        try {
+            rootId = location.href.match(/(?<=www.mediafire.com\/folder\/)[^\/]+/)[0];
+        } catch (e) {
+            console.log("Failded to parse the folder rootId");
+            return;
+        }
+    }
+    console.log("Fetching info for the folder with rootId", rootId);
+    await sleep(800);
+    
     const [rootFolder] = await fetchFolderInfo([rootId]);
 
     let urls = [];
