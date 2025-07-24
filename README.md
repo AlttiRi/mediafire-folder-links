@@ -18,5 +18,5 @@ https://www.mediafire.com/file/asd453/b.mp4/file#{"filename":"b.mp4","path":["Sh
 The global variables with the different representation of the same result are `urlsText`, `urls`, `urlsJson`, `urlsArray`.
 
 ### Note
-- The script works only if you are not logged in. [#1](https://github.com/AlttiRi/mediafire-folder-links/issues/1)
+- The script works only if you are **not** logged in. [#1](https://github.com/AlttiRi/mediafire-folder-links/issues/1)
 - The script uses Mediafire API v1.4.
