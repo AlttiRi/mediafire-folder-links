@@ -4,7 +4,7 @@ Recursively collect all links from a Mediafire folder into a list. With a metada
 
 It's a browser's console script.
 
-You need to open the browser console on Mediafire folder site (The location URL looks like this: `https://www.mediafire.com/folder/abcd/`).
+You need to open the browser console on Mediafire folder site (The location URL looks like this: `https://www.mediafire.com/folder/abcd123qwe/`).
 Then verify the script and paste it in the console to run it.
 
 The result is the logged lists of single file Mediafire downloads with a metadata after a URL hash as a JSON string.
@@ -18,5 +18,5 @@ https://www.mediafire.com/file/asd453/b.mp4/file#{"filename":"b.mp4","path":["Sh
 The global variables with the different representation of the same result are `urlsText`, `urls`, `urlsJson`, `urlsArray`.
 
 ### Note
-- The script works only if you are **not** logged in. [#1](https://github.com/AlttiRi/mediafire-folder-links/issues/1)
+- Sinse the script works only on pages with the `location` looks like this `https://www.mediafire.com/folder/abcd123qwe/` (`www.`, not `app.`!). To fetch the links for your own folder, open the shared folder in an incognito tab to prevent redirecting from `www.mediafire.com` to `app.mediafire.com`.
 - The script uses Mediafire API v1.4.
