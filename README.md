@@ -18,5 +18,6 @@ https://www.mediafire.com/file/asd453/b.mp4/file#{"filename":"b.mp4","path":["Sh
 The global variables with the different representation of the same result are `urlsText`, `urls`, `urlsJson`, `urlsArray`.
 
 ### Note
-- Sinse the script works only on pages with the `location` looks like this `https://www.mediafire.com/folder/abcd123qwe/` (`www.`, not `app.`!). To fetch the links for your own folder, open the shared folder in an incognito tab to prevent redirecting from `www.mediafire.com` to `app.mediafire.com`.
+- Sinse the script works only on pages with the `location` looks like this `https://www.mediafire.com/folder/abcd123qwe/` (`www.`, not `app.`!). To fetch the links for your own folder, you need to open the shared folder in an incognito tab to prevent redirecting from `www.mediafire.com` to `app.mediafire.com`.
+- To stop the script just close the browser's tab.
 - The script uses Mediafire API v1.4.
